@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
+        echo 'test commint 1'
         echo 'build started >>>>>>'
       }
     }
