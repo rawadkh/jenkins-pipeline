@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        echo 'test commint 1'
+        echo 'test commit 1'
+        echo 'test VS code update 1'
         echo 'build started >>>>>>'
       }
     }
