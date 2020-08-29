@@ -20,6 +20,11 @@ pipeline {
         echo 'deployed successfully >>>>'
       }
     }
+    stage('Build status') {
+      steps {
+        echo 'Dears, a new build has been completed successfully >>>>'
+      }
+    }
 
   }
 }
