@@ -50,7 +50,7 @@ pipeline {
   }
   environment {
     MyDockerAccountName = 'khalednoh'
-    MyDockerReposioryName = 'demo1'
+    MyDockerReposioryName = 'pipeline-demo'
     MyTagName = 'Jenkins-pipeline-Demo'
   }
 }
