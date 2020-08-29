@@ -1,24 +1,26 @@
 pipeline {
   agent any
   stages {
-    stage('CICD PIPELINE : build') {
+    stage('SCM Checkout') {
       steps {
-        echo 'build completed >>>>>>'
+        echo '>>> Start getting SCM code'
+        git 'https://github.com/khalednoh/demo2.git'
+        echo '>>> End getting SCM code'
       }
     }
 
-    stage('CICD PIPELINE : test') {
+    stage('Build') {
       steps {
         echo 'testing completed >>>>>>'
       }
     }
 
-    stage('CICD PIPELINE : deploy') {
+    stage('Deploy') {
       steps {
         echo 'deployed successfully >>>>'
       }
     }
-    stage('CICD PIPELINE : notification') {
+    stage('Notification') {
       steps {
         echo 'Dears, a new build has been completed successfully >>>><<<<'
       }
