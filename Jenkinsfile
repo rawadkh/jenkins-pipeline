@@ -25,7 +25,7 @@ pipeline {
         else
           printf \'Clearing old images failed\\n\'
         fi'''
-        echhp '>>> End clearing old docker images'
+        echo '>>> End clearing old docker images'
         echo '>>> Start building App docker image'
         sh "docker build -t $MyDockerAccountName/$MyDockerReposioryName:$MyTagName$BUILD_NUMBER --pull=true $WORKSPACE"
         echo '>>> End building App docker image'
