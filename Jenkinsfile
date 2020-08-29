@@ -31,8 +31,6 @@ pipeline {
         withCredentials([string(credentialsId: 'DockHubSecret', variable: 'DockerHubIDSecret')]) {
             sh "docker login -u $MyDockerAccountName -p $DockerHubIDSecret"
         }
-      }
-      steps {
         echo '>>> Start uploading the docker image'
         sh "docker push $MyDockerAccountName/$MyDockerReposioryName:$MyTagName$BUILD_NUMBER"
         echo '>>> End uploading the docker image'
