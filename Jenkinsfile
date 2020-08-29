@@ -22,7 +22,7 @@ pipeline {
     }
     stage('Build status') {
       steps {
-        echo 'Dears, a new build has been completed successfully >>>>'
+        echo 'Dears, a new build has been completed successfully >>>><<<<'
       }
     }
 
