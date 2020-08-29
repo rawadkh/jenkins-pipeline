@@ -11,7 +11,9 @@ pipeline {
 
     stage('Build') {
       steps {
-        echo 'testing completed >>>>>>'
+        echo '>>> Start building using Maven'
+        sh 'mvn -Dmaven.test.skip=TRUE install'
+        echo '>>> End building using Maven'
       }
     }
 
