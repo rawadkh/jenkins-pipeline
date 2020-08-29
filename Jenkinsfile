@@ -27,10 +27,13 @@ pipeline {
 
     stage('Upload Docker Image') {
       steps {
-        echo '>>> Start uploading the docker image'
+        echo '>>> Login to Docker hub'
         withCredentials([string(credentialsId: 'DockHubSecret', variable: 'DockerHubIDSecret')]) {
             sh "docker login -u $MyDockerAccountName -p $DockerHubIDSecret"
         }
+      }
+      steps {
+        echo '>>> Start uploading the docker image'
         sh "docker push $MyDockerAccountName/$MyDockerReposioryName:$MyTagName$BUILD_NUMBER"
         echo '>>> End uploading the docker image'
       }
@@ -38,7 +41,9 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        echo 'deployed successfully >>>>'
+        echo 'Start running a new container of the application'
+        sh "docker run -d -p 8090:8090 --name=$MyTagName$BUILD_NUMBER $MyDockerAccountName/$MyDockerReposioryName:$MyTagName$BUILD_NUMBER"
+        echo 'End running a new container of the application'
       }
     }
     stage('Notification') {
