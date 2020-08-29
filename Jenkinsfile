@@ -48,10 +48,10 @@ pipeline {
       steps {
         echo 'Start Killing and Removing old continaer'
         
-        sh label: '', script: '''if docker images -a | grep "Jenkins-pipeline-Demo*" | awk \'{print $1":"$2}\' | xargs docker rmi -f; then
-            printf \'Clearing old images succeeded\\n\'
+        sh label: '', script: '''if docker ps -a | grep "Jenkins-pipeline-Demo*" | awk \'{print $1}\' | xargs docker rm -f; then
+            printf \'Clearing old containers done succeeded\\n\'
         else
-            printf \'Clearing old images failed\\n\'
+            printf \'Clearing old containers failed\\n\'
         fi'''
 
         echo 'End Killing and Removing old continaer'
