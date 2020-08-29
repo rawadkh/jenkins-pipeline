@@ -1,26 +1,24 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
+    stage('CICD PIPELINE : build') {
       steps {
-        echo 'test commit 1 ok ya prince update 3333333333333'
-        echo 'test VS code update 1 update 2222222222'
-        echo 'build started >>>>>>'
+        echo 'build completed >>>>>>'
       }
     }
 
-    stage('test') {
+    stage('CICD PIPELINE : test') {
       steps {
         echo 'testing completed >>>>>>'
       }
     }
 
-    stage('deploy') {
+    stage('CICD PIPELINE : deploy') {
       steps {
         echo 'deployed successfully >>>>'
       }
     }
-    stage('Build status') {
+    stage('CICD PIPELINE : notification') {
       steps {
         echo 'Dears, a new build has been completed successfully >>>><<<<'
       }
