@@ -5,7 +5,7 @@ pipeline {
       steps {
         echo '>>> Send New application build notification'
         //mail bcc: '', body: 'Thanks', cc: '', from: '', replyTo: '', subject: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", to: 'khaled.amrosy.fci@gmail.com'
-        mail bcc: '', body: "Dears,
+        mail bcc: '', body: ''"Dears,
         A new build has been started for the Job [$JOB_NAME].
         Below are the Build details:
         Build Number : $BUILD_NUMBER
@@ -14,7 +14,7 @@ pipeline {
         Node Name : $NODE_NAME
         Executor Number : $EXECUTOR_NUMBER
         Workspace : WORKSPACE
-        Thanks. ", cc: '', from: '', replyTo: '', subject: 'New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]', to: 'khaled.amrosy.fci@gmail.com'
+        Thanks. "'', cc: '', from: '', replyTo: '', subject: 'New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]', to: 'khaled.amrosy.fci@gmail.com'
       }
     }
     stage ('Build') {
