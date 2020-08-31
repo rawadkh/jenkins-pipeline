@@ -13,8 +13,8 @@ pipeline {
         Build Tag : $BUILD_TAG
         Node Name : $NODE_NAME
         Executor Number : $EXECUTOR_NUMBER
-        Workspace : WORKSPACE
-        Thanks. """, cc: '', from: '', replyTo: '', subject: 'New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]', to: 'khaled.amrosy.fci@gmail.com'
+        Workspace : $WORKSPACE
+        Thanks. """, cc: '', from: '', replyTo: '', subject: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", to: 'khaled.amrosy.fci@gmail.com'
       }
     }
     stage ('Build') {
