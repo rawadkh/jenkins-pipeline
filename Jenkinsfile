@@ -20,6 +20,7 @@ pipeline {
     stage ('Build') {
       steps {
         echo '>>> Run application build stage'
+        sh 'ttttttt'
       }
     }
     stage ('Test') {
