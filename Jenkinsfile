@@ -113,7 +113,7 @@ pipeline {
     MyTagName = 'Jenkins-pipeline-Demo'
     emailRecipientIDs='khaled.amrosy.fci@gmail.com'
     slackChannelName = '#pipeline-demo'
-    slackTeamDomainName 'pipeline-demo'
+    slackTeamDomainName = 'pipeline-demo'
   }
   post { 
         always { 
