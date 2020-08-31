@@ -1,6 +1,39 @@
 pipeline {
   agent any
   stages {
+    stage ('New Build Notification') {
+      steps {
+        echo '>>> Send New application build notification'
+        mail bcc: '', body: '''Dears,
+        A new build has been started for the Job [$JOB_NAME].
+        Below are the Build details:
+        Build Number : $BUILD_NUMBER
+        Build URL is : $BUILD_URL
+        Build Tag : $BUILD_TAG
+        Node Name : $NODE_NAME
+        Executor Number : $EXECUTOR_NUMBER
+        Workspace : WORKSPACE
+
+        Thanks. ''', cc: '', from: '', replyTo: '', subject: 'New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]', to: 'khaled.amrosy.fci@gmail.com'
+      }
+    }
+    stage ('Build') {
+      steps {
+        echo '>>> Run application build stage'
+      }
+    }
+    stage ('Test') {
+      steps {
+        echo '>>> Run application test stage'
+      }
+    }
+    stage ('Deploy') {
+      steps {
+         echo '>>> Run application deploy stage'
+      }
+    }
+
+/**
     stage('SCM Checkout') {
       steps {
         echo '>>> Start getting SCM code'
@@ -60,16 +93,24 @@ pipeline {
         echo 'End running a new container of the application'
       }
     }
-    stage('Notification') {
-      steps {
-        echo 'Dears, a new build has been completed successfully >>>><<<<'
-      }
-    }
-
+**/
   }
   environment {
     MyDockerAccountName = 'khalednoh'
     MyDockerReposioryName = 'pipeline-demo'
     MyTagName = 'Jenkins-pipeline-Demo'
+  }
+  post { 
+        always { 
+            echo 'I will always run, and I can clean up the workspace here......'
+        }
+        failure { 
+            echo 'I will run in case of failure, and I will send an email in case of failure.'
+            
+        }
+        success { 
+            echo 'I will run in case of success, and I will send an email in case of success'
+            
+        }
   }
 }
