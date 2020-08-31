@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage ('New Build Notification') {
+    stage ('New Build Email Notification') {
       steps {
         echo '>>> Send New application build notification'
         //mail bcc: '', body: 'Thanks', cc: '', from: '', replyTo: '', subject: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", to: 'khaled.amrosy.fci@gmail.com'
@@ -15,6 +15,12 @@ pipeline {
         Executor Number : $EXECUTOR_NUMBER
         Workspace : $WORKSPACE
         Thanks. """, cc: '', from: '', replyTo: '', subject: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", to: "$emailRecipientIDs"
+      }
+    }
+    stage ('New Build slack Notification') {
+      steps {
+        echo '>>> Send New Build Slack notifcation'
+        slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#pipeline-demo', color: 'good', message: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", teamDomain: 'pipeline-demo', tokenCredentialId: 'pipeline-demo-slackID'
       }
     }
     stage ('Build') {
