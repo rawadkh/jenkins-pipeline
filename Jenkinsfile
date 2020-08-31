@@ -1,28 +1,33 @@
 pipeline {
   agent any
   stages {
-    stage ('New Build Email Notification') {
-      steps {
-        echo '>>> Send New application build notification'
-        //mail bcc: '', body: 'Thanks', cc: '', from: '', replyTo: '', subject: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", to: 'khaled.amrosy.fci@gmail.com'
-        mail bcc: '', body: """Dears,
-        A new build has been started for the Job [$JOB_NAME].
-        Below are the Build details:
-        Build Number : $BUILD_NUMBER
-        Build URL is : $BUILD_URL
-        Build Tag : $BUILD_TAG
-        Node Name : $NODE_NAME
-        Executor Number : $EXECUTOR_NUMBER
-        Workspace : $WORKSPACE
-        Thanks. """, cc: '', from: '', replyTo: '', subject: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", to: "$emailRecipientIDs"
-      }
+    stage ('New Build Notifications') {
+       parallel {
+          stage ('Email notification') {
+            steps {
+                    echo '>>> Send New application build notification'
+                    //mail bcc: '', body: 'Thanks', cc: '', from: '', replyTo: '', subject: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", to: 'khaled.amrosy.fci@gmail.com'
+                    mail bcc: '', body: """Dears,
+                    A new build has been started for the Job [$JOB_NAME].
+                    Below are the Build details:
+                    Build Number : $BUILD_NUMBER
+                    Build URL is : $BUILD_URL
+                    Build Tag : $BUILD_TAG
+                    Node Name : $NODE_NAME
+                    Executor Number : $EXECUTOR_NUMBER
+                    Workspace : $WORKSPACE
+                    Thanks. """, cc: '', from: '', replyTo: '', subject: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", to: "$emailRecipientIDs"
+            }
+         }
+         stage ('Slack Notification') {
+            steps {
+              echo '>>> Send New Build Slack notifcation'
+              slackSend baseUrl: 'https://hooks.slack.com/services/', channel: "$slackChannelName", color: 'warning', message: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", teamDomain: "$slackTeamDomainName", tokenCredentialId: 'pipeline-demo-slackID'
+            }
+          }
+        }
     }
-    stage ('New Build slack Notification') {
-      steps {
-        echo '>>> Send New Build Slack notifcation'
-        slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#pipeline-demo', color: 'good', message: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", teamDomain: 'pipeline-demo', tokenCredentialId: 'pipeline-demo-slackID'
-      }
-    }
+    
     stage ('Build') {
       steps {
         echo '>>> Run application build stage'
@@ -107,12 +112,14 @@ pipeline {
     MyDockerReposioryName = 'pipeline-demo'
     MyTagName = 'Jenkins-pipeline-Demo'
     emailRecipientIDs='khaled.amrosy.fci@gmail.com'
+    slackChannelName = '#pipeline-demo'
+    slackTeamDomainName 'pipeline-demo'
   }
   post { 
         always { 
             echo 'I will always run, and I can clean up the workspace here......'
         }
-        success { 
+        success {
             echo 'I will run in case of failure, and I will send an email in case of failure.'
             mail bcc: '', body: """Dears,
             Congratulations the build # $BUILD_NUMBER for the Job [$JOB_NAME] has successded.
@@ -124,6 +131,9 @@ pipeline {
             Executor Number : $EXECUTOR_NUMBER
             Workspace : $WORKSPACE
             Thanks. """, cc: '', from: '', replyTo: '', subject: "Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME] >> Success", to: "$emailRecipientIDs"
+
+            echo 'I will send a success notification on the slack channel'
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: "$slackChannelName", color: 'good', message: "Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME] >> Success", teamDomain: "$slackTeamDomainName", tokenCredentialId: 'pipeline-demo-slackID'
         }
         failure { 
             echo 'I will run in case of success, and I will send an email in case of success'
@@ -137,6 +147,9 @@ pipeline {
             Executor Number : $EXECUTOR_NUMBER
             Workspace : $WORKSPACE
             Thanks. """, cc: '', from: '', replyTo: '', subject: "Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME] >> Failed", to: "$emailRecipientIDs"
+
+            echo 'I will send a success notification on the slack channel'
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: "$slackChannelName", color: 'danger', message: "Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME] >> Failed", teamDomain: "$slackTeamDomainName", tokenCredentialId: 'pipeline-demo-slackID'
         }
   }
 }
