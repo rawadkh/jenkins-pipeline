@@ -28,24 +28,6 @@ pipeline {
         }
     }
     
-    stage ('Build') {
-      steps {
-        echo '>>> Run application build stage'
-        sh 'ttttttt'
-      }
-    }
-    stage ('Test') {
-      steps {
-        echo '>>> Run application test stage'
-      }
-    }
-    stage ('Deploy') {
-      steps {
-         echo '>>> Run application deploy stage'
-      }
-    }
-
-/**
     stage('SCM Checkout') {
       steps {
         echo '>>> Start getting SCM code'
@@ -105,7 +87,7 @@ pipeline {
         echo 'End running a new container of the application'
       }
     }
-**/
+
   }
   environment {
     MyDockerAccountName = 'khalednoh'
