@@ -1,0 +1,11 @@
+node {
+    stage('Preparation') { // for display purposes
+      echo 'Preparation....'
+    }
+    stage('Build') {
+       echo 'Build....'
+    }
+    stage('Results') {
+       echo 'Results....'
+    }
+}
