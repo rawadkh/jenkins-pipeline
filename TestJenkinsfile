@@ -1,6 +1,6 @@
 node {
     stage('Preparation') { // for display purposes
-      echo 'Preparation....'
+      echo 'Test jenins fileeeeeee....'
     }
     stage('Build') {
        echo 'Build....'
